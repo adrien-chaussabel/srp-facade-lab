@@ -62,6 +62,9 @@ public class RpgPlayer {
         if (item.isRare())
             gameEngine.playSpecialEffect("cool_swirly_particles");
 
+        if (item.isRare() && item.isUnique())
+            gameEngine.playSpecialEffect("blue_swirly");
+
         inventory.add(item);
 
         calculateStats();
@@ -97,6 +100,8 @@ public class RpgPlayer {
         }
 
         int damageToDeal = damage - armour;
+        if (calculateInventoryWeight() < .5 * carryingCapacity)
+            damageToDeal *= .75;
         health -= damageToDeal;
 
         gameEngine.playSpecialEffect("lots_of_gore");
